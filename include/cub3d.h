@@ -16,11 +16,10 @@
 /********** INCLUDES **********/
 
 # include "libft.h"
+# include "mlx.h"
 # include "unistd.h"
 # include "stdio.h"
 # include <stdlib.h>
 # include <errno.h>
-
-
 
 #endif
