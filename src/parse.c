@@ -1,9 +1,9 @@
 #include "cub3d.h"
 
-static int check_valid_ext(char *map) {
+int check_valid_ext(char *map, char *ext) {
   while (*map != '\0') {
     if (*map == '.') {
-      if (ft_strncmp(map, ".cub\0", 5) == 0)
+      if (ft_strncmp(map, ext, ft_strlen(ext)) == 0)
         return (0);
     }
     map++;
@@ -16,7 +16,7 @@ void check_args(int argc, char *argv[]) {
     printf("Incorrect number of arguments\n");
     exit(0);
   }
-  if (check_valid_ext(argv[1])) {
+  if (check_valid_ext(argv[1], ".cub\0")) {
     printf("Invalid file extension\n");
     exit(0);
   }

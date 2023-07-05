@@ -28,11 +28,16 @@ typedef struct s_args {
   char *south_texture;
   char *west_texture;
   char *east_texture;
-  char *floor_color;
-  char *ceiling_color;
+  char *player_direction;
+  char *player_position;
+  int floor_color;
+  int ceiling_color;
   char **map;
 } t_args;
 
 void check_args(int argc, char *argv[]);
+int create_map_data(char *map, t_args *args);
+int check_valid_ext(char *map, char *ext);
+void free_all(t_args *args);
 
 #endif
