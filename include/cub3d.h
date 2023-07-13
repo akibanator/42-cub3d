@@ -35,9 +35,24 @@ typedef struct s_args {
   char **map;
 } t_args;
 
-void check_args(int argc, char *argv[]);
 int create_map_data(char *map, t_args *args);
 int check_valid_ext(char *map, char *ext);
+
+// Parse
+void check_args(int argc, char *argv[]);
+int get_nbr_lines(char *map);
+char *skip_spaces(char *line);
+
+// Cardinal
+int handle_cardinal(char *line, char *info, t_args *args, int cord);
+
+// RGB
+int handle_rgb(char *line, char *info, t_args *args, int floor);
+
+// Free
+void free_file(char **file, int nbr_lines);
+void free_on_error(t_args *args, int num);
 void free_all(t_args *args);
+void free_split(char **split);
 
 #endif

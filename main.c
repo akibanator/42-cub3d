@@ -20,10 +20,12 @@ int main(int argc, char *argv[]) {
     return (0);
   }
 
-  printf("%s\n", args->north_texture);
-  printf("%s\n", args->south_texture);
-  printf("%s\n", args->west_texture);
-  printf("%s\n", args->east_texture);
+  printf("args->north_texture: [%s]\n", args->north_texture);
+  printf("args->south_texture: [%s]\n", args->south_texture);
+  printf("args->west_texture: [%s]\n", args->west_texture);
+  printf("args->east_texture: [%s]\n", args->east_texture);
+  printf("args->floor_color: [%d]\n", args->floor_color);
+  printf("args->ceiling_color: [%d]\n", args->ceiling_color);
   free_all(args);
   free(args);
   return (0);

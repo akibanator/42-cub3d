@@ -1,10 +1,10 @@
-        NO                                                  m/test/north.xpm
-SO textures/test/south.xpm
-WE textures/test/west.xp
-EA textures/test/east.xpm
+NO ./assets/teapot1.xpm
+SO ./assets/teapot2.xpm
+WE ./assets/teapot3.xpm
+EA ./assets/teapot4.xpm
 
-F 20,20,20
-C 200,200,200
+F 255,255,255
+C 255,255,255
 
 111111111111111111111
 1000000000000000000E1
