@@ -65,6 +65,7 @@ typedef struct s_data
 	char	**map;
 } t_data;
 
+// TODO: Add origin vector when creating the ray
 typedef struct s_ray
 {
 	double	 angle;
