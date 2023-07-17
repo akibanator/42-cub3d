@@ -21,15 +21,15 @@ t_player *player_init(void)
 	player = malloc(sizeof(t_player));
 	if (player == NULL)
 		return (NULL);
-	player->pos.x = WINDOW_WIDTH / 2.0;
-	player->pos.y = WINDOW_HEIGHT / 2.0;
+	player->pos.x = 2.5 * TILE_SIZE;
+	player->pos.y = 2.5 * TILE_SIZE;
 	player->radius = 5;
 	player->rotation_input = 0;
 	player->walk_direction = 0;
 	// TODO: Set rotation angle according to file
 	player->rotation_angle = PI / 2;
-	player->walk_speed = 0.2;
-	player->turn_speed = 0.002;
+	player->walk_speed = 0.5;	// 0.2
+	player->turn_speed = 0.005; // 0.002
 	return (player);
 }
 

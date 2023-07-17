@@ -55,7 +55,7 @@ static int get_wall_strip_height(t_ray ray, t_player *player)
 	int	   wall_strip_height;
 
 	perp_distance = ray.distance * cos(ray.angle - player->rotation_angle);
-	dist_proj_plane = (WINDOW_WIDTH / 2.0) / tan(FOV_ANGLE / 2.0);
+	dist_proj_plane = (GAME_WIDTH / 2.0) / tan(FOV_ANGLE / 2.0);
 	projected_wall_height = (TILE_SIZE / perp_distance) * dist_proj_plane;
 	wall_strip_height = (int) projected_wall_height;
 	return (wall_strip_height);
@@ -63,29 +63,37 @@ static int get_wall_strip_height(t_ray ray, t_player *player)
 
 void draw_wall_strip(t_img *canvas, int x, int height, int wallColor)
 {
-	int i;
+	int col;
+	int row;
 	int wall_top_pixel;
 	int wall_bot_pixel;
 
+	height = height * UPSCALE;
 	if (height > WINDOW_HEIGHT || height < 0)
 		height = WINDOW_HEIGHT;
-	i = 0;
+	col = x * UPSCALE;
+	row = 0;
 	wall_top_pixel = (WINDOW_HEIGHT / 2) - (height / 2);
 	wall_bot_pixel = (WINDOW_HEIGHT / 2) + (height / 2);
-	while (i < wall_top_pixel)
+	while (col < x * UPSCALE + UPSCALE)
 	{
-		draw_pixel(canvas, x, i, 0x0);
-		i++;
-	}
-	while (i < wall_bot_pixel)
-	{
-		draw_pixel(canvas, x, i, wallColor);
-		i++;
-	}
-	while (i < WINDOW_HEIGHT)
-	{
-		draw_pixel(canvas, x, i, 0xBBBBBB);
-		i++;
+		row = 0;
+		while (row < wall_top_pixel)
+		{
+			draw_pixel(canvas, col, row, 0x0);
+			row++;
+		}
+		while (row < wall_bot_pixel)
+		{
+			draw_pixel(canvas, col, row, wallColor);
+			row++;
+		}
+		while (row < WINDOW_HEIGHT)
+		{
+			draw_pixel(canvas, col, row, 0xBBBBBB);
+			row++;
+		}
+		col++;
 	}
 }
 
@@ -95,14 +103,14 @@ void draw_walls(t_data *data)
 	t_ray  ray;
 	double ray_angle;
 	int	   wall_strip_height;
-	int	   col;
+	int	   game_x;
 	double dist_proj_plane;
 
-	dist_proj_plane = (WINDOW_WIDTH / 2.0) / tan(FOV_ANGLE / 2.0);
-	col = 0;
-	while (col < NUM_RAYS)
+	dist_proj_plane = (GAME_WIDTH / 2.0) / tan(FOV_ANGLE / 2.0);
+	game_x = 0;
+	while (game_x < NUM_RAYS)
 	{
-		ray_angle = data->player->rotation_angle + atan((col - NUM_RAYS / 2.0) / dist_proj_plane);
+		ray_angle = data->player->rotation_angle + atan((game_x - NUM_RAYS / 2.0) / dist_proj_plane);
 		ray = raycast(data->player->pos, ray_angle);
 		wall_strip_height = get_wall_strip_height(ray, data->player);
 		int color;
@@ -116,8 +124,8 @@ void draw_walls(t_data *data)
 			color = 0xAA0000;
 		else
 			color = 0xFFFFFF;
-		draw_wall_strip(data->canvas, col, wall_strip_height, color);
+		draw_wall_strip(data->canvas, game_x, wall_strip_height, color);
 		ray_angle += FOV_ANGLE / NUM_RAYS;
-		col++;
+		game_x++;
 	}
 }
