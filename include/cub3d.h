@@ -28,8 +28,10 @@ typedef struct s_args {
   char *south_texture;
   char *west_texture;
   char *east_texture;
-  char *player_direction;
+  char player_direction;
   char *player_position;
+  size_t map_height;
+  size_t map_width;
   int floor_color;
   int ceiling_color;
   char **map;
@@ -37,6 +39,9 @@ typedef struct s_args {
 
 int create_map_data(char *map, t_args *args);
 int check_valid_ext(char *map, char *ext);
+
+// Init
+t_args *init_struct(void);
 
 // Parse
 void check_args(int argc, char *argv[]);
@@ -48,6 +53,9 @@ int handle_cardinal(char *line, char *info, t_args *args, int cord);
 
 // RGB
 int handle_rgb(char *line, char *info, t_args *args, int floor);
+
+// MAP
+int handle_map(t_args *args, char **map, int nbr_lines);
 
 // Free
 void free_file(char **file, int nbr_lines);

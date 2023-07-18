@@ -1,10 +1,24 @@
 #include "cub3d.h"
 
+static void free_omap(t_args *args) {
+  size_t i;
+  char **omap;
+
+  i = 0;
+  omap = args->map;
+  while (i < args->map_height) {
+    free(omap[i]);
+    i++;
+  }
+  free(omap);
+}
+
 void free_all(t_args *args) {
   free(args->north_texture);
   free(args->south_texture);
   free(args->west_texture);
   free(args->east_texture);
+  free_omap(args);
 }
 
 void free_file(char **file, int nbr_lines) {

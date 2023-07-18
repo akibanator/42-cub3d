@@ -3,7 +3,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
-static char **map_copy(char *map, char **file) {
+static char **file_copy(char *map, char **file) {
   int fd;
   char *line;
   char **head_file;
@@ -25,7 +25,12 @@ static char **map_copy(char *map, char **file) {
 }
 
 static int handle_struct_data(char **file, int nbr_lines, t_args *args) {
-  while (nbr_lines--) {
+  int count;
+  char **head_file;
+
+  count = nbr_lines;
+  head_file = file;
+  while (count--) {
     if (handle_cardinal(*file, "NO ", args, 0))
       return (1);
     else if (handle_cardinal(*file, "SO ", args, 1))
@@ -40,19 +45,9 @@ static int handle_struct_data(char **file, int nbr_lines, t_args *args) {
       return (1);
     file++;
   }
+  if (handle_map(args, head_file, nbr_lines))
+    return (1);
   return (0);
-}
-
-void init_struct(t_args *args) {
-  args->north_texture = NULL;
-  args->south_texture = NULL;
-  args->west_texture = NULL;
-  args->east_texture = NULL;
-  args->player_direction = NULL;
-  args->player_position = NULL;
-  args->floor_color = 0;
-  args->ceiling_color = 0;
-  args->map = NULL;
 }
 
 int create_map_data(char *map, t_args *args) {
@@ -64,7 +59,9 @@ int create_map_data(char *map, t_args *args) {
   nbr_lines = get_nbr_lines(map);
   if (nbr_lines != 0) {
     file = (char **)malloc(nbr_lines * sizeof(char *));
-    file = map_copy(map, file);
+    if (file == NULL)
+      return (1);
+    file = file_copy(map, file);
     if (handle_struct_data(file, nbr_lines, args) || *file == NULL) {
       printf("There is something wrong on .map file\n");
       flag = 1;

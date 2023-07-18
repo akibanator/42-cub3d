@@ -13,23 +13,29 @@ static int check_commas(char *line) {
 }
 
 static int handle_limits_digit(char *line) {
-  int count;
+  int i;
+  int j;
   char *head;
 
-  count = 0;
+  i = 0;
+  j = 0;
   head = line;
-  while (*head != '\0')
+  while (*head != '\0') {
+    i++;
     head++;
-  while (count < 3) {
+  }
+  if (i > 3)
+    return (-1);
+  while (j < i) {
     head--;
-    count++;
-    if (count > 3 || !ft_isdigit(*head))
+    j++;
+    if (!ft_isdigit(*head))
       return (-1);
-    if (count == 1 && (*head < '0' || *head > '5'))
+    if (j == 1 && (*head < '0' || *head > '5'))
       return (-1);
-    else if (count == 2 && (*head < '0' || *head > '5'))
+    else if (j == 2 && (*head < '0' || *head > '5'))
       return (-1);
-    else if (count == 3 && (*head < '0' || *head > '2'))
+    else if (j == 3 && (*head < '0' || *head > '2'))
       return (-1);
   }
   return (ft_atoi(line));
