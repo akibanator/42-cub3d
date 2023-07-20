@@ -37,6 +37,8 @@ $(OBJ_DIR)/%.o:		$(SRC_DIR)/%.c
 clean:
 					echo $(CLEANING_MSG)
 					rm -rf $(OBJ_DIR)
+					rm -rf debug
+					rm -rf new_core*
 					$(MAKE) -C $(LIBFT_DIR) clean
 					$(MAKE) -C $(LIBMLX_DIR) clean
 
