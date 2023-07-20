@@ -22,27 +22,17 @@
 #include <errno.h>
 #include <stdlib.h>
 
-#define TILE_SIZE 64
-
 /* ***** Structs ***** */
-typedef struct s_img {
-  void *mlx_img;
-  char *addr;
-  int bits_per_pixel;
-  int line_length;
-  int endian;
-} t_img;
-
 typedef struct s_vector {
   double x;
   double y;
 } t_vector;
 
 typedef struct s_assets {
-  t_img north_texture;
-  t_img south_texture;
-  t_img west_texture;
-  t_img east_texture;
+  char *north_texture;
+  char *south_texture;
+  char *west_texture;
+  char *east_texture;
   int floor_color;
   int ceiling_color;
 } t_assets;
@@ -50,7 +40,8 @@ typedef struct s_assets {
 typedef struct s_map {
   t_vector start_dir;
   t_vector start_pos;
-  t_vector size;
+  size_t height;
+  size_t width;
   char **grid;
   t_assets assets;
 } t_map;
@@ -60,11 +51,26 @@ typedef struct s_data {
 } t_data;
 
 // Parse
-int check_args(int argc, char *argv[]);
+void check_args(int argc, char *argv[]);
 int check_valid_ext(char *map, char *ext);
-int check_map(char *file);
-t_map create_data(char *file, void *mlx);
-char *trimm_line(char *line);
-size_t count_spaces(char *line);
+t_map create_map_data(char *file);
+size_t get_nbr_lines(char *map);
+
+char *skip_spaces(char *line);
+
+// Cardinal
+int handle_cardinal(char *line, char *info, t_args *args, int cord);
+
+// RGB
+int handle_rgb(char *line, char *info, t_args *args, int floor);
+
+// MAP
+int handle_map(t_args *args, char **map, int nbr_lines);
+
+// Free
+void free_file(char **file, int nbr_lines);
+void free_on_error(t_args *args, int num);
+void free_all(t_args *args);
+void free_split(char **split);
 
 #endif
