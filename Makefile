@@ -4,6 +4,7 @@ CFLAGS				= -Wall -Wextra -Werror -I$(LIBFT_DIR) -I$(LIBMLX_DIR) -I$(INCLUDE_DIR
 CFLAGS_LIB			= -lft -L $(LIBFT_DIR) -lmlx -L $(LIBMLX_DIR) -lXext -lX11 -lm -lz
 
 INCLUDE_DIR			= include
+INCLUDE_FILES		= $(shell find include/ -type f -name '*.h')
 SRC_DIR				= src
 OBJ_DIR				= obj
 LIB_DIR				= lib
@@ -20,7 +21,7 @@ VALGRIND			+= --track-origins=yes --quiet --tool=memcheck
 
 all:				$(NAME)
 
-$(NAME):			$(MAIN) $(OBJ_DIR) $(OBJ_FILES) 
+$(NAME):			$(MAIN) $(OBJ_DIR) $(OBJ_FILES) $(INCLUDE_FILES)
 					$(MAKE) -C $(LIBFT_DIR)
 					$(MAKE) -C $(LIBMLX_DIR)
 					$(CC) $(MAIN) $(OBJ_FILES) $(CFLAGS) $(CFLAGS_LIB) \

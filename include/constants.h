@@ -1,0 +1,24 @@
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
+#define PI 3.14159265
+#define TWO_PI 6.28318530
+
+#define UPSCALE 4
+
+#define GAME_WIDTH 320
+#define GAME_HEIGHT 200
+
+#define WINDOW_WIDTH (GAME_WIDTH * UPSCALE)
+#define WINDOW_HEIGHT (GAME_HEIGHT * UPSCALE)
+
+#define FOV_ANGLE (60 * (PI / 180))
+
+// TODO: Change NUM_RAYS to GAME_WIDTH
+
+#define NUM_RAYS GAME_WIDTH
+// #define NUM_RAYS WINDOW_WIDTH
+
+#define TILE_SIZE 64
+
+#endif
