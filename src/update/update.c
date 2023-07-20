@@ -20,7 +20,6 @@ static int map_has_wall_at(t_vector point)
 
 int update(void *data)
 {
-	// update_mouse(data);
 	update_player(data);
 	render_canvas(data);
 	return (0);
@@ -49,25 +48,6 @@ double get_move_angle(t_player *player)
 	else
 		return (angle - PI);
 }
-
-// void update_mouse(t_data *data)
-// {
-// 	t_player *player;
-// 	int		  x;
-// 	int		  y;
-// 	double	  sense;
-// 	int		  deadzone;
-//
-// 	player = data->player;
-// 	sense = 0.00001;
-// 	deadzone = 2;
-// 	mlx_mouse_get_pos(data->mlx, data->window, &x, &y);
-// 	if (x > WINDOW_WIDTH / 2 + deadzone)
-// 		player->mouse_rotation = (x - WINDOW_WIDTH / 2.0) * sense;
-// 	else if (x < WINDOW_WIDTH / 2 - deadzone)
-// 		player->mouse_rotation = (WINDOW_WIDTH / 2.0 - x) * -sense;
-// 	mlx_mouse_move(data->mlx, data->window, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
-// }
 
 void update_player(t_data *data)
 {
