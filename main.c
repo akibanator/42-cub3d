@@ -1,4 +1,5 @@
 #include "cub3d.h"
+#include "mlx.h"
 #include <stdlib.h>
 
 t_img *create_new_canvas(t_data *data, int width, int height)
@@ -25,11 +26,12 @@ t_player *player_init(void)
 	player->pos.y = 2.5 * TILE_SIZE;
 	player->radius = 5;
 	player->rotation_input = 0;
-	player->walk_direction = 0;
-	// TODO: Set rotation angle according to file
+	player->mouse_rotation = 0;
+	player->walk_direction.x = 0;
+	player->walk_direction.y = 0;
 	player->rotation_angle = PI / 2;
-	player->walk_speed = 0.5;	// 0.2
-	player->turn_speed = 0.005; // 0.002
+	player->walk_speed = 1;
+	player->turn_speed = 0.01;
 	return (player);
 }
 
@@ -60,11 +62,14 @@ t_data *data_init(void)
 
 void hooks_setup(t_data *data)
 {
-	mlx_loop_hook(data->mlx, &update, data);
+	mlx_mouse_hide(data->mlx, data->window);
+	mlx_hook(data->window, MotionNotify, PointerMotionMask, &handle_mouse, data);
 	mlx_hook(data->window, KeyPress, KeyPressMask, &handle_keypress, data);
 	mlx_hook(data->window, KeyRelease, KeyReleaseMask, &handle_keyrelease, data);
 	mlx_hook(data->window, DestroyNotify, NoEventMask, &handle_close, data);
-	mlx_loop(data->mlx);
+	mlx_hook(data->window, EnterNotify, EnterWindowMask, &handle_window_enter, data);
+	mlx_hook(data->window, LeaveNotify, LeaveWindowMask, &handle_window_leave, data);
+	mlx_loop_hook(data->mlx, &update, data);
 }
 
 int main(void)
@@ -73,6 +78,7 @@ int main(void)
 
 	data = data_init();
 	hooks_setup(data);
+	mlx_loop(data->mlx);
 	exit_game(data);
 	return (0);
 }

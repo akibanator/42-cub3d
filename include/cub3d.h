@@ -49,8 +49,9 @@ typedef struct s_player
 {
 	t_vector pos;
 	int		 radius;
-	int		 rotation_input;
-	int		 walk_direction;
+	double	 rotation_input;
+	double	 mouse_rotation;
+	t_vector walk_direction;
 	double	 rotation_angle;
 	double	 walk_speed;
 	double	 turn_speed;
@@ -94,6 +95,10 @@ t_ray  raycast(t_vector origin, double ray_angle);
 int	 handle_keypress(int keysym, t_data *data);
 int	 handle_keyrelease(int keysym, t_data *data);
 int	 handle_close(t_data *data);
+int	 handle_mouse(int x, int y, void *data);
+int	 handle_window_enter(t_data *data);
+int	 handle_window_leave(t_data *data);
+void update_mouse(t_data *data);
 void exit_game(t_data *data);
 // Utils
 int get_color_value(int red, int green, int blue);
