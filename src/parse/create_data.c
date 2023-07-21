@@ -271,7 +271,6 @@ t_vector get_start_dir(char **grid) {
   return (start_dir);
 }
 
-// TODO: fix get_start_pos function
 t_vector get_start_pos(char **grid) {
   t_vector start_pos;
   size_t i;
@@ -281,14 +280,11 @@ t_vector get_start_pos(char **grid) {
   while (grid[i] != NULL) {
     j = 0;
     while (grid[i][j] != '\0') {
-      if (grid[i][j] == 'N')
-        start_pos.y = 1;
-      if (grid[i][j] == 'S')
-        start_pos.y = -1;
-      if (grid[i][j] == 'W')
-        start_pos.x = -1;
-      if (grid[i][j] == 'E')
-        start_pos.x = 1;
+      if (grid[i][j] == 'N' || grid[i][j] == 'S' || grid[i][j] == 'W' ||
+          grid[i][j] == 'E') {
+        start_pos.y = i;
+        start_pos.x = j;
+      }
       j++;
     }
     i++;
