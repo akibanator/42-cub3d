@@ -182,18 +182,18 @@ t_map get_assets(char **map_data, void *mlx) {
   t_map map;
   char *path;
 
+  (void)mlx;
   path = get_path(map_data, "NO ");
-  map.assets.north_texture = get_img(path, mlx);
+  // map.assets.north_texture = get_img(path, mlx);
   path = get_path(map_data, "SO ");
-  map.assets.south_texture = get_img(path, mlx);
+  // map.assets.south_texture = get_img(path, mlx);
   path = get_path(map_data, "WE ");
-  map.assets.west_texture = get_img(path, mlx);
+  // map.assets.west_texture = get_img(path, mlx);
   path = get_path(map_data, "EA ");
-  map.assets.east_texture = get_img(path, mlx);
+  // map.assets.east_texture = get_img(path, mlx);
+  printf("path: [%s]\n", path);
   map.assets.floor_color = get_rgb(map_data, "F ");
-  printf("rgb: [%d]\n", map.assets.floor_color);
   map.assets.ceiling_color = get_rgb(map_data, "C ");
-  printf("rgb: [%d]\n", map.assets.ceiling_color);
   return (map);
 }
 
@@ -210,7 +210,14 @@ char **mapcpy(char **map_data, char **grid, int width) {
     j = 0;
     if (!ft_strncmp(map_data[i] + spaces, "1", 1)) {
       while (j < width && map_data[i][j] != '\0') {
-        grid[k][j] = map_data[i][j];
+        if (map_data[i][j] == ' ')
+          grid[k][j] = '1';
+        else
+          grid[k][j] = map_data[i][j];
+        j++;
+      }
+      while (j < width) {
+        grid[k][j] = '1';
         j++;
       }
       k++;
@@ -226,7 +233,6 @@ char **get_grid(char **map_data, t_vector size) {
   int height;
   int width;
 
-  grid = NULL;
   i = 0;
   height = (int)size.y;
   width = (int)size.x;

@@ -15,5 +15,6 @@ int main(int argc, char *argv[]) {
   map = create_data(argv[1], mlx);
   mlx_destroy_display(mlx);
   free(mlx);
+  free_map(map.grid);
   return (0);
 }

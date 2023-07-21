@@ -66,5 +66,6 @@ int check_map(char *file);
 t_map create_data(char *file, void *mlx);
 char *trimm_line(char *line);
 size_t count_spaces(char *line);
+void free_map(char **grid);
 
 #endif

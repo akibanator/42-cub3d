@@ -1,4 +1,4 @@
-                NO ./assets/teapot1.xpm
+NO ./assets/teapot1.xpm
 SO ./assets/teapot2.xpm
 WE ./assets/teapot3.xpm
 EA ./assets/teapot4.xpm
@@ -6,6 +6,6 @@ EA ./assets/teapot4.xpm
 F 255,200,12
 C 211,223,225
 
-111111111111111111111
+   111111111111111111111
 1000000000000000000E1
 111111111111111111111
