@@ -22,6 +22,7 @@ int main(int argc, char *argv[]) {
     free(args);
     printf("Program will be closed\n");
     return (0);
+<<<<<<< Updated upstream
   }
 
   printf("args->north_texture: [%s]\n", args->north_texture);
@@ -40,5 +41,12 @@ int main(int argc, char *argv[]) {
 
   free_all(args);
   free(args);
+=======
+  mlx = mlx_init();
+  map = create_data(argv[1], mlx);
+  mlx_destroy_display(mlx);
+  free(mlx);
+  free_map(map.grid);
+>>>>>>> Stashed changes
   return (0);
 }

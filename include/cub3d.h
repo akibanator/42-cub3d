@@ -44,6 +44,7 @@ int check_valid_ext(char *map, char *ext);
 t_args *init_struct(void);
 
 // Parse
+<<<<<<< Updated upstream
 void check_args(int argc, char *argv[]);
 int get_nbr_lines(char *map);
 char *skip_spaces(char *line);
@@ -62,5 +63,14 @@ void free_file(char **file, int nbr_lines);
 void free_on_error(t_args *args, int num);
 void free_all(t_args *args);
 void free_split(char **split);
+=======
+int check_args(int argc, char *argv[]);
+int check_valid_ext(char *map, char *ext);
+int check_map(char *file);
+t_map create_data(char *file, void *mlx);
+char *trimm_line(char *line);
+size_t count_spaces(char *line);
+void free_map(char **grid);
+>>>>>>> Stashed changes
 
 #endif
