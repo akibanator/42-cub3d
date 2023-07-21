@@ -182,16 +182,14 @@ t_map get_assets(char **map_data, void *mlx) {
   t_map map;
   char *path;
 
-  (void)mlx;
   path = get_path(map_data, "NO ");
-  // map.assets.north_texture = get_img(path, mlx);
+  map.assets.north_texture = get_img(path, mlx);
   path = get_path(map_data, "SO ");
-  // map.assets.south_texture = get_img(path, mlx);
+  map.assets.south_texture = get_img(path, mlx);
   path = get_path(map_data, "WE ");
-  // map.assets.west_texture = get_img(path, mlx);
+  map.assets.west_texture = get_img(path, mlx);
   path = get_path(map_data, "EA ");
-  // map.assets.east_texture = get_img(path, mlx);
-  printf("path: [%s]\n", path);
+  map.assets.east_texture = get_img(path, mlx);
   map.assets.floor_color = get_rgb(map_data, "F ");
   map.assets.ceiling_color = get_rgb(map_data, "C ");
   return (map);
@@ -247,15 +245,67 @@ char **get_grid(char **map_data, t_vector size) {
   return (grid);
 }
 
+t_vector get_start_dir(char **grid) {
+  t_vector start_dir;
+  size_t i;
+  size_t j;
+
+  i = 0;
+  start_dir.x = 0;
+  start_dir.y = 0;
+  while (grid[i] != NULL) {
+    j = 0;
+    while (grid[i][j] != '\0') {
+      if (grid[i][j] == 'N')
+        start_dir.y = 1;
+      if (grid[i][j] == 'S')
+        start_dir.y = -1;
+      if (grid[i][j] == 'W')
+        start_dir.x = -1;
+      if (grid[i][j] == 'E')
+        start_dir.x = 1;
+      j++;
+    }
+    i++;
+  }
+  return (start_dir);
+}
+
+// TODO: fix get_start_pos function
+t_vector get_start_pos(char **grid) {
+  t_vector start_pos;
+  size_t i;
+  size_t j;
+
+  i = 0;
+  while (grid[i] != NULL) {
+    j = 0;
+    while (grid[i][j] != '\0') {
+      if (grid[i][j] == 'N')
+        start_pos.y = 1;
+      if (grid[i][j] == 'S')
+        start_pos.y = -1;
+      if (grid[i][j] == 'W')
+        start_pos.x = -1;
+      if (grid[i][j] == 'E')
+        start_pos.x = 1;
+      j++;
+    }
+    i++;
+  }
+  return (start_pos);
+}
+
 t_map create_data(char *file, void *mlx) {
   t_map map;
   char **map_data;
 
-  (void)mlx;
   map_data = get_map_data(file);
   map = get_assets(map_data, mlx);
   map.size = get_size(map_data);
   map.grid = get_grid(map_data, map.size);
+  map.start_dir = get_start_dir(map.grid);
+  map.start_pos = get_start_pos(map.grid);
   free_map(map_data);
   return (map);
 }
