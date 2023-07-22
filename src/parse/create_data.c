@@ -183,13 +183,19 @@ t_map get_assets(char **map_data, void *mlx) {
   char *path;
 
   path = get_path(map_data, "NO ");
-  map.assets.north_texture = get_img(path, mlx);
+  // printf("path NO: [%s]\n", path);
+  // map.assets.north_texture = get_img(path, mlx);
   path = get_path(map_data, "SO ");
-  map.assets.south_texture = get_img(path, mlx);
+  // printf("path SO: [%s]\n", path);
+  // map.assets.south_texture = get_img(path, mlx);
   path = get_path(map_data, "WE ");
-  map.assets.west_texture = get_img(path, mlx);
+  // printf("path WE: [%s]\n", path);
+  // map.assets.west_texture = get_img(path, mlx);
   path = get_path(map_data, "EA ");
-  map.assets.east_texture = get_img(path, mlx);
+  // printf("path EA: [%s]\n", path);
+  // map.assets.east_texture = get_img(path, mlx);
+  (void)path;
+  (void)mlx;
   map.assets.floor_color = get_rgb(map_data, "F ");
   map.assets.ceiling_color = get_rgb(map_data, "C ");
   return (map);
@@ -302,6 +308,7 @@ t_map create_data(char *file, void *mlx) {
   map.grid = get_grid(map_data, map.size);
   map.start_dir = get_start_dir(map.grid);
   map.start_pos = get_start_pos(map.grid);
+
   free_map(map_data);
   return (map);
 }

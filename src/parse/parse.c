@@ -42,6 +42,39 @@ int is_cardinal(char *line) {
   return (0);
 }
 
+void free_rgb(char **rgb) {
+  size_t i;
+
+  i = 0;
+  while (rgb[i] != NULL) {
+    free(rgb[i]);
+    i++;
+  }
+  free(rgb);
+}
+
+int check_valid_rgb(char *line) {
+  char **rgb;
+  char *trimmed_rgb;
+  size_t i;
+  int flag;
+
+  rgb = ft_split(line, ',');
+  i = 0;
+  flag = 0;
+  while (rgb[i] != NULL) {
+    trimmed_rgb = trimm_line(rgb[i]);
+    if (ft_strlen(trimmed_rgb) == 3)
+      if (trimmed_rgb[0] < '0' || trimmed_rgb[0] > '2')
+        flag = 1;
+    i++;
+  }
+  if (i != 3)
+    flag = 1;
+  free_rgb(rgb);
+  return (flag);
+}
+
 int is_rgb(char *line) {
   size_t i;
   size_t comma;
@@ -52,17 +85,21 @@ int is_rgb(char *line) {
   valid_rgb = 0;
   line = trimm_line(line);
   while (line[i] != '\0') {
-    valid_rgb++;
-    if (line[i] == ',') {
-      comma++;
-      valid_rgb = 0;
-    } else if (!ft_isdigit(line[i]))
-      return (1);
+    if (line[i] != ' ') {
+      valid_rgb++;
+      if (line[i] == ',') {
+        comma++;
+        valid_rgb = 0;
+      } else if (!ft_isdigit(line[i]))
+        return (1);
+    }
     if (valid_rgb > 3)
       return (1);
     i++;
   }
   if (comma != 2)
+    return (1);
+  if (check_valid_rgb(line))
     return (1);
   return (0);
 }
@@ -90,25 +127,39 @@ int is_map(char *line) {
   return (0);
 }
 
-int is_entry(char *line) {
+int is_cardinal_line(char *line) {
   const char *cardinal[] = {"NO ", "SO ", "WE ", "EA ", NULL};
-  const char *rgb[] = {"F ", "C ", NULL};
   size_t i;
 
   i = 0;
   while (cardinal[i] != NULL) {
     if (!ft_strncmp(line, cardinal[i], ft_strlen(cardinal[i])))
-      if (is_cardinal(line + 3))
+      if (!is_cardinal(line + 3))
         return (1);
     i++;
   }
+  return (0);
+}
+
+int is_rgb_line(char *line) {
+  const char *rgb[] = {"F ", "C ", NULL};
+  size_t i;
+
   i = 0;
   while (rgb[i] != NULL) {
     if (!ft_strncmp(line, rgb[i], ft_strlen(rgb[i])))
-      if (is_rgb(line + 2))
+      if (!is_rgb(line + 2))
         return (1);
     i++;
   }
+  return (0);
+}
+
+int is_entry(char *line) {
+  if (is_cardinal_line(line))
+    return (1);
+  if (is_rgb_line(line))
+    return (1);
   if (!ft_strncmp(line, "1", 1) || !ft_strncmp(line, " ", 1))
     if (is_map(line))
       return (1);
@@ -129,23 +180,23 @@ int check_line(char *line) {
 int check_map(char *file) {
   int fd;
   char *line;
+  int entries;
 
   fd = open(file, O_RDONLY);
+  entries = 0;
   if (fd < 0) {
     printf("Valid data not found in file [%s]\n", file);
     return (1);
   }
   line = ft_get_next_line(fd);
   while (line != NULL) {
-    if (check_line(line)) {
-      free(line);
-      close(fd);
-      return (1);
-    }
+    entries = entries + check_line(line);
     free(line);
     line = ft_get_next_line(fd);
   }
   close(fd);
+  if (entries != 6)
+    return (1);
   return (0);
 }
 

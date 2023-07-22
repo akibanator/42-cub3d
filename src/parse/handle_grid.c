@@ -53,5 +53,7 @@ int check_valid_grid(char **grid, t_vector size) {
   width = (int)size.x;
   if (is_grid_border(grid, height, width))
     return (1);
+  if (is_valid_player(grid))
+    return (1);
   return (0);
 }

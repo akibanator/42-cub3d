@@ -8,14 +8,20 @@ int main(int argc, char *argv[]) {
   size_t i;
 
   i = 0;
-  if (check_args(argc, argv))
+  if (check_args(argc, argv)) {
+    printf("Error\n");
     return (0);
-  if (check_map(argv[1]))
+  }
+  if (check_map(argv[1])) {
+    printf("Error\n");
     return (0);
+  }
   mlx = mlx_init();
   map = create_data(argv[1], mlx);
-  if (check_valid_grid(map.grid, map.size))
+  if (check_valid_grid(map.grid, map.size)) {
+    printf("Error\n");
     return (0);
+  }
   printf("map.assets.floor_color: [%d]\n", map.assets.floor_color);
   printf("map.assets.ceiling_color: [%d]\n", map.assets.ceiling_color);
   printf("map.size.x: [%f]\n", map.size.x);
@@ -29,6 +35,7 @@ int main(int argc, char *argv[]) {
     printf("%s\n", map.grid[i]);
     i++;
   }
+
   mlx_destroy_display(mlx);
   free(mlx);
   free_map(map.grid);
