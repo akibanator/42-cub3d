@@ -102,6 +102,8 @@ void	  hooks_setup(t_data *data);
 t_img	 *create_new_canvas(t_data *data, int width, int height);
 t_player *player_init(void);
 t_data	 *data_init(void);
+// Check map grid
+int map_has_wall_at(t_map map, t_vector point);
 // Update
 int	 update(void *data);
 void update_player(t_data *data);
@@ -113,7 +115,7 @@ void   draw_wall_strip(t_img *canvas, int x, int height, int wallColor);
 void   render_canvas(t_data *data);
 t_ray  ray_new(double angle);
 double ray_get_distance(t_vector origin, t_ray ray);
-t_ray  raycast(t_vector origin, double ray_angle);
+t_ray  raycast(t_vector origin, double ray_angle, t_map map);
 // Input
 int	 handle_keypress(int keysym, t_data *data);
 int	 handle_keyrelease(int keysym, t_data *data);

@@ -60,10 +60,10 @@ setup_debug:
 debug:				clean setup_debug all
 
 run:				all
-					@./$(NAME)
+					@./$(NAME) ./map/simple.cub
 
-runv:				all
-					@$(VALGRIND) ./$(NAME)
+runv:				debug
+					@$(VALGRIND) ./debug ./map/simple.cub
 
 test:				all
 					./tests/tests.sh

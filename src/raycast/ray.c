@@ -34,8 +34,10 @@ double ray_get_distance(t_vector origin, t_ray ray)
 	double adjacent;
 	double opposite;
 
-	adjacent = pow((ray.hit.x - origin.x), 2);
-	opposite = pow((ray.hit.y - origin.y), 2);
+	// adjacent = pow((ray.hit.x - origin.x), 2);
+	adjacent = (ray.hit.x - origin.x) * (ray.hit.x - origin.x);
+	// opposite = pow((ray.hit.y - origin.y), 2);
+	opposite = (ray.hit.y - origin.y) * (ray.hit.y - origin.y);
 	distance = sqrt(adjacent + opposite);
 	return (distance);
 }

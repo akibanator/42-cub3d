@@ -32,8 +32,9 @@ t_player *player_init(void)
 	player = malloc(sizeof(t_player));
 	if (player == NULL)
 		return (NULL);
-	player->pos.x = 2.5 * TILE_SIZE;
-	player->pos.y = 2.5 * TILE_SIZE;
+	// TODO: Get player position and direction from map
+	player->pos.x = 4.5 * TILE_SIZE;
+	player->pos.y = 4.5 * TILE_SIZE;
 	player->radius = 5;
 	player->rotation_input = 0;
 	player->mouse_rotation = 0;

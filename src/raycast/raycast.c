@@ -11,43 +11,7 @@
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-#define MAP_WIDTH 12
-#define MAP_HEIGHT 24
-
-char map[MAP_HEIGHT][MAP_WIDTH] = {{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'}, {'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'}, {'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'}, {'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'}, {'1', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1'}, {'1', '0', '0', '0', '0', '0', '1', '0', '0', '0', '1', '1'}, {'1', '0', '0', '0', '0', '0', '1', '0', '0', '0', '1', '1'}, {'1', '0', '0', '0', '0', '0', '1', '0', '0', '0', '1', '1'}, {'1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '1'}, {'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'}, {'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'}, {'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'}, {'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'}, {'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'}, {'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'}, {'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'}, {'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'}, {'1', '1', '0', '1', '0', '0', '0', '0', '1', '0', '0', '1'}, {'1', '1', '0', '0', '0', '0', '1', '0', '1', '0', '0', '1'}, {'1', '1', '0', '1', '0', '0', '0', '0', '1', '0', '0', '1'}, {'1', '1', '0', '1', '1', '1', '1', '1', '1', '0', '0', '1'}, {'1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'}, {'1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1'}, {'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'}};
-
-// TODO: map parameter
-int map_has_wall_at(t_vector point)
-{
-	int grid_x;
-	int grid_y;
-
-	grid_x = (int) floor(point.x / TILE_SIZE);
-	grid_y = (int) floor(point.y / TILE_SIZE);
-	if (map[grid_y][grid_x] > '0')
-		return (TRUE);
-	return (FALSE);
-}
-
-char map_get_tile_tag(t_ray ray)
-{
-	int grid_x;
-	int grid_y;
-	int offset;
-
-	grid_x = (int) floor(ray.hit.x / TILE_SIZE);
-	if (ray.dir.y < 0)
-		offset = 1;
-	else
-		offset = 0;
-	grid_y = (int) floor((ray.hit.y - offset) / TILE_SIZE);
-	if (grid_x < 0 || grid_x > MAP_WIDTH)
-		return ('1');
-	else if (grid_y < 0 || grid_y > MAP_HEIGHT)
-		return ('1');
-	return (map[grid_y][grid_x]);
-}
+#include <stdio.h>
 
 double normalize_angle(double angle)
 {
@@ -72,16 +36,16 @@ t_vector get_ray_dir(double ray_angle)
 	return (dir);
 }
 
-int is_ray_inside_map(t_ray ray)
+int is_ray_inside_map(t_ray ray, t_map map)
 {
-	if (ray.hit.x < 0 && ray.hit.x > MAP_WIDTH * TILE_SIZE)
+	if (ray.hit.x < 0 && ray.hit.x > map.size.x * TILE_SIZE)
 		return (FALSE);
-	else if (ray.hit.y < 0 && ray.hit.y > MAP_HEIGHT * TILE_SIZE)
+	else if (ray.hit.y < 0 && ray.hit.y > map.size.y * TILE_SIZE)
 		return (FALSE);
 	return (TRUE);
 }
 
-char get_horz_hit_tag(t_ray ray)
+char get_horz_hit_tag(t_ray ray, t_map map)
 {
 	int map_x;
 	int map_y;
@@ -93,14 +57,14 @@ char get_horz_hit_tag(t_ray ray)
 	else
 		offset = 0;
 	map_y = (int) floor((ray.hit.y - offset) / TILE_SIZE);
-	if (map_x < 0 || map_x > MAP_WIDTH)
+	if (map_x < 0 || map_x >= map.size.x)
 		return ('1');
-	else if (map_y < 0 || map_y > MAP_HEIGHT)
+	else if (map_y < 0 || map_y >= map.size.y)
 		return ('1');
-	return (map[map_y][map_x]);
+	return (map.grid[map_y][map_x]);
 }
 
-char get_vert_hit_tag(t_ray ray)
+char get_vert_hit_tag(t_ray ray, t_map map)
 {
 	int map_x;
 	int map_y;
@@ -112,14 +76,14 @@ char get_vert_hit_tag(t_ray ray)
 		offset = 0;
 	map_x = (int) floor((ray.hit.x - offset) / TILE_SIZE);
 	map_y = (int) floor(ray.hit.y / TILE_SIZE);
-	if (map_x < 0 || map_x > MAP_WIDTH)
+	if (map_x < 0 || map_x >= map.size.x)
 		return ('1');
-	else if (map_y < 0 || map_y > MAP_HEIGHT)
+	else if (map_y < 0 || map_y >= map.size.y)
 		return ('1');
-	return (map[map_y][map_x]);
+	return (map.grid[map_y][map_x]);
 }
 
-t_ray get_horizontal_hit(t_vector origin, double ray_angle)
+t_ray get_horizontal_hit(t_vector origin, double ray_angle, t_map map)
 {
 	t_ray	 ray;
 	t_vector intercept;
@@ -139,11 +103,11 @@ t_ray get_horizontal_hit(t_vector origin, double ray_angle)
 	if (ray.dir.x > 0 && step.x < 0)
 		step.x *= -1;
 	ray.hit = intercept;
-	while (is_ray_inside_map(ray))
+	while (is_ray_inside_map(ray, map))
 	{
 		// ray.hit_tag = map_get_tile_tag(ray);
-		ray.hit_tag = get_horz_hit_tag(ray);
-		if (ray.hit_tag != '0')
+		ray.hit_tag = get_horz_hit_tag(ray, map);
+		if (ray.hit_tag == '1')
 		{
 			ray.was_hit_vertical = FALSE;
 			ray.distance = ray_get_distance(origin, ray);
@@ -155,7 +119,7 @@ t_ray get_horizontal_hit(t_vector origin, double ray_angle)
 	return (ray);
 }
 
-t_ray get_vertical_hit(t_vector origin, double ray_angle)
+t_ray get_vertical_hit(t_vector origin, double ray_angle, t_map map)
 {
 	t_ray	 ray;
 	t_vector intercept;
@@ -175,11 +139,11 @@ t_ray get_vertical_hit(t_vector origin, double ray_angle)
 	if (ray.dir.y > 0 && step.y < 0)
 		step.y *= -1;
 	ray.hit = intercept;
-	while (is_ray_inside_map(ray))
+	while (is_ray_inside_map(ray, map))
 	{
 		// ray.hit_tag = map_get_tile_tag(ray);
-		ray.hit_tag = get_vert_hit_tag(ray);
-		if (ray.hit_tag != '0')
+		ray.hit_tag = get_vert_hit_tag(ray, map);
+		if (ray.hit_tag == '1')
 		{
 			ray.was_hit_vertical = TRUE;
 			ray.distance = ray_get_distance(origin, ray);
@@ -191,13 +155,13 @@ t_ray get_vertical_hit(t_vector origin, double ray_angle)
 	return (ray);
 }
 
-t_ray raycast(t_vector origin, double ray_angle)
+t_ray raycast(t_vector origin, double ray_angle, t_map map)
 {
 	t_ray vertical_ray;
 	t_ray horizontal_ray;
 
-	horizontal_ray = get_horizontal_hit(origin, ray_angle);
-	vertical_ray = get_vertical_hit(origin, ray_angle);
+	horizontal_ray = get_horizontal_hit(origin, ray_angle, map);
+	vertical_ray = get_vertical_hit(origin, ray_angle, map);
 	if (vertical_ray.distance < horizontal_ray.distance)
 		return (vertical_ray);
 	return (horizontal_ray);
