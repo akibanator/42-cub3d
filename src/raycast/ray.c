@@ -6,20 +6,17 @@
 /*   By: bcorrea- <bruuh.cor@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 21:09:29 by bcorrea-          #+#    #+#             */
-/*   Updated: 2023/07/14 21:09:29 by bcorrea-         ###   ########.fr       */
+/*   Updated: 2023/07/23 03:28:23 by bcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <math.h>
 
-static t_vector ray_get_dir(double ray_angle);
-static double	normalize_angle(double angle);
-
-t_ray ray_new(double angle)
+t_ray ray_new(t_vector origin, double angle)
 {
 	t_ray ray;
 
+	ray.origin = origin;
 	ray.angle = normalize_angle(angle);
 	ray.dir = ray_get_dir(ray.angle);
 	ray.hit_tag = '0';
@@ -28,19 +25,19 @@ t_ray ray_new(double angle)
 	return (ray);
 }
 
-double ray_get_distance(t_vector origin, t_ray ray)
+double ray_get_distance(t_ray ray)
 {
 	double distance;
 	double adjacent;
 	double opposite;
 
-	adjacent = pow((ray.hit.x - origin.x), 2);
-	opposite = pow((ray.hit.y - origin.y), 2);
+	adjacent = pow((ray.hit.x - ray.origin.x), 2);
+	opposite = pow((ray.hit.y - ray.origin.y), 2);
 	distance = sqrt(adjacent + opposite);
 	return (distance);
 }
 
-static t_vector ray_get_dir(double ray_angle)
+t_vector ray_get_dir(double ray_angle)
 {
 	t_vector dir;
 
@@ -55,7 +52,7 @@ static t_vector ray_get_dir(double ray_angle)
 	return (dir);
 }
 
-static double normalize_angle(double angle)
+double normalize_angle(double angle)
 {
 	angle = remainder(angle, TWO_PI);
 	if (angle < 0)

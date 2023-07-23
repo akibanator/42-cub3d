@@ -6,7 +6,7 @@
 /*   By: akenji-a <akenji-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:45:39 by akenji-a          #+#    #+#             */
-/*   Updated: 2023/06/15 17:53:23 by akenji-a         ###   ########.fr       */
+/*   Updated: 2023/07/23 03:32:18 by bcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_data
 // TODO: Add origin vector when creating the ray (Maybe???)
 typedef struct s_ray
 {
+	t_vector origin;
 	double	 angle;
 	t_vector hit;
 	char	 hit_tag;
@@ -111,10 +112,14 @@ void draw_pixel(t_img *canvas, int x, int y, int color);
 int	 get_tex_color(t_img tex, int x, int y);
 void draw_walls(t_data *data);
 // Raycast
-t_ray  ray_new(double angle);
-double ray_get_distance(t_vector origin, t_ray ray);
-t_ray  raycast(t_vector origin, double ray_angle, t_map map);
-int	   is_ray_inside_map(t_ray ray, t_map map);
+t_ray	 ray_new(t_vector origin, double angle);
+double	 ray_get_distance(t_ray ray);
+t_vector ray_get_dir(double ray_angle);
+double	 normalize_angle(double angle);
+t_ray	 raycast(t_vector origin, double ray_angle, t_map map);
+t_ray	 get_horizontal_hit(t_ray ray, t_map map, t_vector step);
+t_ray	 get_vertical_hit(t_ray ray, t_map map, t_vector step);
+int		 is_ray_inside_map(t_ray ray, t_map map);
 // Input
 int	 handle_keypress(int keysym, t_data *data);
 int	 handle_keyrelease(int keysym, t_data *data);
