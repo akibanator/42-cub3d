@@ -6,7 +6,7 @@
 /*   By: akenji-a <akenji-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 17:45:39 by akenji-a          #+#    #+#             */
-/*   Updated: 2023/07/23 03:32:18 by bcorrea-         ###   ########.fr       */
+/*   Updated: 2023/07/23 16:26:44 by bcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ typedef struct s_data
 	double	  dist_proj_plane;
 } t_data;
 
-// TODO: Add origin vector when creating the ray (Maybe???)
 typedef struct s_ray
 {
 	t_vector origin;
@@ -95,6 +94,18 @@ typedef struct s_ray
 	double	 distance;
 	t_vector dir;
 } t_ray;
+
+typedef struct s_wall
+{
+	int	  height;
+	int	  top;
+	int	  bot;
+	int	  tex_x;
+	int	  tex_y;
+	int	  ceiling_color;
+	int	  floor_color;
+	t_img texture;
+} t_wall;
 
 /********** PROTOTYPES **********/
 
