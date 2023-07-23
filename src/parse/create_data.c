@@ -104,17 +104,6 @@ char **get_map_data(char *file) {
   return (map_data);
 }
 
-void free_map(char **map_data) {
-  size_t i;
-
-  i = 0;
-  while (map_data[i] != NULL) {
-    free(map_data[i]);
-    i++;
-  }
-  free(map_data);
-}
-
 char *get_path(char **map_data, char *find) {
   char *path;
   size_t i;
@@ -183,17 +172,17 @@ t_map get_assets(char **map_data, void *mlx) {
   char *path;
 
   path = get_path(map_data, "NO ");
-  map.assets.north_texture = get_img(path, mlx);
+  // map.assets.north_texture = get_img(path, mlx);
   path = get_path(map_data, "SO ");
-  map.assets.south_texture = get_img(path, mlx);
+  // map.assets.south_texture = get_img(path, mlx);
   path = get_path(map_data, "WE ");
-  map.assets.west_texture = get_img(path, mlx);
+  // map.assets.west_texture = get_img(path, mlx);
   path = get_path(map_data, "EA ");
-  map.assets.east_texture = get_img(path, mlx);
+  // map.assets.east_texture = get_img(path, mlx);
+  (void)path;
+  (void)mlx;
   map.assets.floor_color = get_rgb(map_data, "F ");
-  printf("rgb: [%d]\n", map.assets.floor_color);
   map.assets.ceiling_color = get_rgb(map_data, "C ");
-  printf("rgb: [%d]\n", map.assets.ceiling_color);
   return (map);
 }
 
@@ -210,7 +199,14 @@ char **mapcpy(char **map_data, char **grid, int width) {
     j = 0;
     if (!ft_strncmp(map_data[i] + spaces, "1", 1)) {
       while (j < width && map_data[i][j] != '\0') {
-        grid[k][j] = map_data[i][j];
+        if (map_data[i][j] == ' ')
+          grid[k][j] = '1';
+        else
+          grid[k][j] = map_data[i][j];
+        j++;
+      }
+      while (j < width) {
+        grid[k][j] = '1';
         j++;
       }
       k++;
@@ -226,7 +222,6 @@ char **get_grid(char **map_data, t_vector size) {
   int height;
   int width;
 
-  grid = NULL;
   i = 0;
   height = (int)size.y;
   width = (int)size.x;
@@ -241,15 +236,64 @@ char **get_grid(char **map_data, t_vector size) {
   return (grid);
 }
 
+t_vector get_start_dir(char **grid) {
+  t_vector start_dir;
+  size_t i;
+  size_t j;
+
+  i = 0;
+  start_dir.x = 0;
+  start_dir.y = 0;
+  while (grid[i] != NULL) {
+    j = 0;
+    while (grid[i][j] != '\0') {
+      if (grid[i][j] == 'N')
+        start_dir.y = 1;
+      if (grid[i][j] == 'S')
+        start_dir.y = -1;
+      if (grid[i][j] == 'W')
+        start_dir.x = -1;
+      if (grid[i][j] == 'E')
+        start_dir.x = 1;
+      j++;
+    }
+    i++;
+  }
+  return (start_dir);
+}
+
+t_vector get_start_pos(char **grid) {
+  t_vector start_pos;
+  size_t i;
+  size_t j;
+
+  i = 0;
+  while (grid[i] != NULL) {
+    j = 0;
+    while (grid[i][j] != '\0') {
+      if (grid[i][j] == 'N' || grid[i][j] == 'S' || grid[i][j] == 'W' ||
+          grid[i][j] == 'E') {
+        start_pos.y = i;
+        start_pos.x = j;
+      }
+      j++;
+    }
+    i++;
+  }
+  return (start_pos);
+}
+
 t_map create_data(char *file, void *mlx) {
   t_map map;
   char **map_data;
 
-  (void)mlx;
   map_data = get_map_data(file);
   map = get_assets(map_data, mlx);
   map.size = get_size(map_data);
   map.grid = get_grid(map_data, map.size);
-  free_map(map_data);
+  map.start_dir = get_start_dir(map.grid);
+  map.start_pos = get_start_pos(map.grid);
+
+  free_split(map_data);
   return (map);
 }

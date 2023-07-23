@@ -7,3 +7,4 @@ compile_flags.txt
 new_core*
 .clang-format
 ./lib/libmlx/test/mlx-test
+cub3d_destroyer
