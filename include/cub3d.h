@@ -81,6 +81,7 @@ typedef struct s_data
 	t_img	 *canvas;
 	t_player *player;
 	t_map	  map;
+	double	  dist_proj_plane;
 } t_data;
 
 // TODO: Add origin vector when creating the ray (Maybe???)
@@ -101,27 +102,25 @@ void	  hooks_setup(t_data *data);
 t_img	 *create_new_canvas(t_data *data, int width, int height);
 t_player *player_init(void);
 t_data	 *data_init(void);
-// Check map grid
-int map_has_wall_at(t_map map, t_vector point);
 // Update
 int	 update(void *data);
 void update_player(t_data *data);
-// Render
-void   draw_pixel(t_img *canvas, int x, int y, int color);
-void   draw_rect(t_img *canvas, int x, int y, int width, int height, int color);
-void   draw_walls(t_data *data);
-void   draw_wall_strip(t_img *canvas, int x, int height, int wallColor);
-void   render_canvas(t_data *data);
+void render_canvas(t_data *data);
+// Draw
+void draw_pixel(t_img *canvas, int x, int y, int color);
+int	 get_tex_color(t_img tex, int x, int y);
+void draw_walls(t_data *data);
+// Raycast
 t_ray  ray_new(double angle);
 double ray_get_distance(t_vector origin, t_ray ray);
 t_ray  raycast(t_vector origin, double ray_angle, t_map map);
+int	   is_ray_inside_map(t_ray ray, t_map map);
 // Input
 int	 handle_keypress(int keysym, t_data *data);
 int	 handle_keyrelease(int keysym, t_data *data);
 int	 handle_close(t_data *data);
 int	 handle_mouse(int x, int y, void *data);
 int	 handle_window_leave(t_data *data);
-void update_mouse(t_data *data);
 void exit_game(t_data *data);
 // Utils
 int get_color_value(int red, int green, int blue);

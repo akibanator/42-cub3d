@@ -36,15 +36,6 @@ t_vector get_ray_dir(double ray_angle)
 	return (dir);
 }
 
-int is_ray_inside_map(t_ray ray, t_map map)
-{
-	if (ray.hit.x < 0 && ray.hit.x > map.size.x * TILE_SIZE)
-		return (FALSE);
-	else if (ray.hit.y < 0 && ray.hit.y > map.size.y * TILE_SIZE)
-		return (FALSE);
-	return (TRUE);
-}
-
 char get_horz_hit_tag(t_ray ray, t_map map)
 {
 	int map_x;
@@ -105,7 +96,6 @@ t_ray get_horizontal_hit(t_vector origin, double ray_angle, t_map map)
 	ray.hit = intercept;
 	while (is_ray_inside_map(ray, map))
 	{
-		// ray.hit_tag = map_get_tile_tag(ray);
 		ray.hit_tag = get_horz_hit_tag(ray, map);
 		if (ray.hit_tag == '1')
 		{
@@ -141,7 +131,6 @@ t_ray get_vertical_hit(t_vector origin, double ray_angle, t_map map)
 	ray.hit = intercept;
 	while (is_ray_inside_map(ray, map))
 	{
-		// ray.hit_tag = map_get_tile_tag(ray);
 		ray.hit_tag = get_vert_hit_tag(ray, map);
 		if (ray.hit_tag == '1')
 		{

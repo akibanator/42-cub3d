@@ -12,19 +12,11 @@
 
 #include "cub3d.h"
 
-int map_has_wall_at(t_map map, t_vector point)
+int is_ray_inside_map(t_ray ray, t_map map)
 {
-	int grid_x;
-	int grid_y;
-
-	grid_x = (int) floor(point.x / TILE_SIZE);
-	grid_y = (int) floor(point.y / TILE_SIZE);
-	// printf("grid_x:%d grid_y:%d tag: %c\n", grid_x, grid_y, map.grid[grid_y][grid_x]);
-	if (grid_x >= map.size.x || grid_x <= 0)
-		return (TRUE);
-	else if (grid_y >= map.size.y || grid_y <= 0)
-		return (TRUE);
-	if (map.grid[grid_y][grid_x] == '1')
-		return (TRUE);
-	return (FALSE);
+	if (ray.hit.x < 0 && ray.hit.x > map.size.x * TILE_SIZE)
+		return (FALSE);
+	else if (ray.hit.y < 0 && ray.hit.y > map.size.y * TILE_SIZE)
+		return (FALSE);
+	return (TRUE);
 }

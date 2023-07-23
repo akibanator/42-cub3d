@@ -67,5 +67,6 @@ t_data *data_init(void)
 	}
 	data->player = player_init();
 	data->canvas = create_new_canvas(data, WINDOW_WIDTH, WINDOW_HEIGHT);
+	data->dist_proj_plane = (GAME_WIDTH / 2.0) / tan(FOV_ANGLE / 2.0);
 	return (data);
 }
