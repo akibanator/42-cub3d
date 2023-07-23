@@ -5,14 +5,8 @@
 int main(int argc, char *argv[]) {
   t_map map;
   void *mlx;
-  size_t i;
 
-  i = 0;
-  if (check_args(argc, argv)) {
-    printf("Error\n");
-    return (0);
-  }
-  if (check_map(argv[1])) {
+  if (check_args(argc, argv) || check_map(argv[1])) {
     printf("Error\n");
     return (0);
   }
@@ -22,22 +16,8 @@ int main(int argc, char *argv[]) {
     printf("Error\n");
     return (0);
   }
-  printf("map.assets.floor_color: [%d]\n", map.assets.floor_color);
-  printf("map.assets.ceiling_color: [%d]\n", map.assets.ceiling_color);
-  printf("map.size.x: [%f]\n", map.size.x);
-  printf("map.size.y: [%f]\n", map.size.y);
-  printf("map.start_dir.x: [%f]\n", map.start_dir.x);
-  printf("map.start_dir.y: [%f]\n", map.start_dir.y);
-  printf("map.start_pos.x: [%f]\n", map.start_pos.x);
-  printf("map.start_pos.y: [%f]\n", map.start_pos.y);
-  printf("MAP: \n");
-  while (map.grid[i] != NULL) {
-    printf("%s\n", map.grid[i]);
-    i++;
-  }
-
   mlx_destroy_display(mlx);
   free(mlx);
-  free_map(map.grid);
+  free_split(map.grid);
   return (0);
 }

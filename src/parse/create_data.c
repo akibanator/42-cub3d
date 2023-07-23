@@ -104,17 +104,6 @@ char **get_map_data(char *file) {
   return (map_data);
 }
 
-void free_map(char **map_data) {
-  size_t i;
-
-  i = 0;
-  while (map_data[i] != NULL) {
-    free(map_data[i]);
-    i++;
-  }
-  free(map_data);
-}
-
 char *get_path(char **map_data, char *find) {
   char *path;
   size_t i;
@@ -183,16 +172,12 @@ t_map get_assets(char **map_data, void *mlx) {
   char *path;
 
   path = get_path(map_data, "NO ");
-  // printf("path NO: [%s]\n", path);
   // map.assets.north_texture = get_img(path, mlx);
   path = get_path(map_data, "SO ");
-  // printf("path SO: [%s]\n", path);
   // map.assets.south_texture = get_img(path, mlx);
   path = get_path(map_data, "WE ");
-  // printf("path WE: [%s]\n", path);
   // map.assets.west_texture = get_img(path, mlx);
   path = get_path(map_data, "EA ");
-  // printf("path EA: [%s]\n", path);
   // map.assets.east_texture = get_img(path, mlx);
   (void)path;
   (void)mlx;
@@ -309,6 +294,6 @@ t_map create_data(char *file, void *mlx) {
   map.start_dir = get_start_dir(map.grid);
   map.start_pos = get_start_pos(map.grid);
 
-  free_map(map_data);
+  free_split(map_data);
   return (map);
 }

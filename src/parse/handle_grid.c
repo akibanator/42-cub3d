@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int is_grid_border(char **grid, int height, int width) {
+static int is_grid_border(char **grid, int height, int width) {
   size_t i;
   size_t j;
 
@@ -23,7 +23,7 @@ int is_grid_border(char **grid, int height, int width) {
   return (0);
 }
 
-int is_valid_player(char **grid) {
+static int is_valid_player(char **grid) {
   size_t i;
   size_t j;
   size_t p_count;

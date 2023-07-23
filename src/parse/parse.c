@@ -42,17 +42,6 @@ int is_cardinal(char *line) {
   return (0);
 }
 
-void free_rgb(char **rgb) {
-  size_t i;
-
-  i = 0;
-  while (rgb[i] != NULL) {
-    free(rgb[i]);
-    i++;
-  }
-  free(rgb);
-}
-
 int check_valid_rgb(char *line) {
   char **rgb;
   char *trimmed_rgb;
@@ -71,7 +60,7 @@ int check_valid_rgb(char *line) {
   }
   if (i != 3)
     flag = 1;
-  free_rgb(rgb);
+  free_split(rgb);
   return (flag);
 }
 
