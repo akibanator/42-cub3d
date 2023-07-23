@@ -17,5 +17,6 @@ void render_canvas(t_data *data)
 	if (data->window == NULL)
 		return;
 	draw_walls(data);
+	mlx_clear_window(data->mlx, data->window);
 	mlx_put_image_to_window(data->mlx, data->window, data->canvas->mlx_img, 0, 0);
 }

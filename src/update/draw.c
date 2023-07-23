@@ -68,7 +68,7 @@ static int get_wall_strip_height(t_ray ray, t_player *player)
 	int	   wall_strip_height;
 
 	perp_distance = ray.distance * cos(ray.angle - player->rotation_angle);
-	dist_proj_plane = (WINDOW_WIDTH / 2.0) / tan(FOV_ANGLE / 2);
+	dist_proj_plane = (GAME_WIDTH / 2.0) / tan(FOV_ANGLE / 2);
 	projected_wall_height = (TILE_SIZE / perp_distance) * dist_proj_plane;
 	wall_strip_height = (int) projected_wall_height;
 	return (wall_strip_height);

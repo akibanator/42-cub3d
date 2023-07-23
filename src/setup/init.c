@@ -35,14 +35,13 @@ t_player *player_init(void)
 	// TODO: Get player position and direction from map
 	player->pos.x = 4.5 * TILE_SIZE;
 	player->pos.y = 4.5 * TILE_SIZE;
-	player->radius = 5;
+	player->radius = 30;
 	player->rotation_input = 0;
 	player->mouse_rotation = 0;
 	player->walk_direction.x = 0;
 	player->walk_direction.y = 0;
 	player->rotation_angle = PI / 2;
-	player->walk_speed = 1;
-	player->turn_speed = 0.01;
+	player->mouse_mode = -1;
 	return (player);
 }
 

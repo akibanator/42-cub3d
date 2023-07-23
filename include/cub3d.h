@@ -71,8 +71,7 @@ typedef struct s_player
 	double	 mouse_rotation;
 	t_vector walk_direction;
 	double	 rotation_angle;
-	double	 walk_speed;
-	double	 turn_speed;
+	int		 mouse_mode;
 } t_player;
 
 typedef struct s_data
@@ -84,7 +83,7 @@ typedef struct s_data
 	t_map	  map;
 } t_data;
 
-// TODO: Add origin vector when creating the ray
+// TODO: Add origin vector when creating the ray (Maybe???)
 typedef struct s_ray
 {
 	double	 angle;
@@ -121,7 +120,6 @@ int	 handle_keypress(int keysym, t_data *data);
 int	 handle_keyrelease(int keysym, t_data *data);
 int	 handle_close(t_data *data);
 int	 handle_mouse(int x, int y, void *data);
-int	 handle_window_enter(t_data *data);
 int	 handle_window_leave(t_data *data);
 void update_mouse(t_data *data);
 void exit_game(t_data *data);

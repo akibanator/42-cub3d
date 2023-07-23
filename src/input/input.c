@@ -30,9 +30,11 @@ int handle_keypress(int keysym, t_data *data)
 	else if (keysym == XK_a)
 		player->walk_direction.x = -1;
 	else if (keysym == XK_q)
-		player->rotation_input = player->turn_speed * -1;
+		player->rotation_input = TURN_SPEED * -1;
 	else if (keysym == XK_e)
-		player->rotation_input = player->turn_speed;
+		player->rotation_input = TURN_SPEED;
+	else if (keysym == XK_r)
+		player->mouse_mode *= -1;
 	return (0);
 }
 
@@ -53,6 +55,8 @@ int handle_keyrelease(int keysym, t_data *data)
 		player->rotation_input = 0;
 	else if (keysym == XK_e)
 		player->rotation_input = 0;
+	else if (keysym == XK_q)
+		player->mouse_mode *= -1;
 	return (0);
 }
 
@@ -60,30 +64,18 @@ int handle_mouse(int x, int y, void *data)
 {
 	t_data	 *game_data;
 	t_player *player;
-	double	  sense;
-	int		  deadzone;
 
 	(void) y;
 	game_data = (t_data *) data;
 	player = game_data->player;
-	sense = 0.00002;
-	deadzone = 200;
-	if (x > WINDOW_WIDTH / 2 + deadzone)
-		player->mouse_rotation = (x - WINDOW_WIDTH / 2.0) * sense;
-	else if (x < WINDOW_WIDTH / 2 - deadzone)
-		player->mouse_rotation = (WINDOW_WIDTH / 2.0 - x) * -sense;
-	else if (x > WINDOW_WIDTH / 2 - deadzone && x < WINDOW_WIDTH / 2 + deadzone)
+	if (player->mouse_mode == -1)
+		return (0);
+	if (x > WINDOW_WIDTH / 2 + MOUSE_DEADZONE)
+		player->mouse_rotation = (x - WINDOW_WIDTH / 2.0) * SENSIBILITY;
+	else if (x < WINDOW_WIDTH / 2 - MOUSE_DEADZONE)
+		player->mouse_rotation = (WINDOW_WIDTH / 2.0 - x) * -SENSIBILITY;
+	else if (x > WINDOW_WIDTH / 2 - MOUSE_DEADZONE && x < WINDOW_WIDTH / 2 + MOUSE_DEADZONE)
 		player->mouse_rotation = 0;
-	return (0);
-}
-
-// WARNING: Unnecessary hook
-int handle_window_enter(t_data *data)
-{
-	t_player *player;
-
-	player = data->player;
-	(void) player;
 	return (0);
 }
 

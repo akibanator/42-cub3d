@@ -49,13 +49,11 @@ void update_player(t_data *data)
 	new_pos.y = player->pos.y;
 	if (player->walk_direction.x != 0 || player->walk_direction.y != 0)
 	{
-		new_pos.x += cos(move_angle) * player->walk_speed;
-		new_pos.y += sin(move_angle) * player->walk_speed;
+		new_pos.x += cos(move_angle) * WALK_SPEED;
+		new_pos.y += sin(move_angle) * WALK_SPEED;
 		t_ray ray = raycast(new_pos, move_angle, data->map);
-		if (ray.distance <= 30)
+		if (ray.distance <= player->radius)
 			return;
-		// if (map_has_wall_at(data->map, new_pos))
-		// 	return;
 	}
 	player->pos.x = new_pos.x;
 	player->pos.y = new_pos.y;
