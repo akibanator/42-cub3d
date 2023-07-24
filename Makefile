@@ -114,11 +114,12 @@ $(OBJ_BONUS_DIR):
 
 $(OBJ_BONUS_DIR)/%.o:	$(SRC_BONUS_DIR)/%.c
 						mkdir -p "$(@D)"
-						$(CC) -c $< $(CFLAGS) -o $@
+						$(CC) -c $< $(CFLAGS_BONUS) -o $@
 
 clean:
 					echo $(CLEANING_MSG)
 					rm -rf $(OBJ_DIR)
+					rm -rf $(OBJ_BONUS_DIR)
 					rm -rf debug
 					rm -rf new_core*
 					$(MAKE) -C $(LIBFT_DIR) clean
@@ -126,6 +127,7 @@ clean:
 
 fclean:				clean
 					rm -f $(NAME)
+					rm -f $(NAME)_bonus
 					$(MAKE) -C $(LIBFT_DIR) fclean
 					$(MAKE) -C $(LIBMLX_DIR) clean
 
