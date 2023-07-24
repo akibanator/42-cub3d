@@ -45,6 +45,47 @@ MAIN				= main.c
 VALGRIND			= valgrind --leak-check=full --show-leak-kinds=all
 VALGRIND			+= --track-origins=yes --quiet --tool=memcheck
 
+# ********** BONUS ********** #
+
+INCLUDE_BONUS_DIR	= include_bonus
+INCLUDE_BONUS_FILES	= include_bonus/cub3d_bonus.h include_bonus/constants_bonus.h
+SRC_BONUS_DIR		= src_bonus
+OBJ_BONUS_DIR		= obj_bonus
+
+CFLAGS_BONUS		= -Wall -Wextra -Werror -I$(LIBFT_DIR) -I$(LIBMLX_DIR) -I$(INCLUDE_BONUS_DIR)
+
+SRC_BONUS_FILES		= src_bonus/draw/draw_walls_bonus.c
+SRC_BONUS_FILES		+= src_bonus/draw/draw_pixel_bonus.c
+SRC_BONUS_FILES		+= src_bonus/setup/init_bonus.c
+SRC_BONUS_FILES		+= src_bonus/setup/hooks_setup_bonus.c
+SRC_BONUS_FILES		+= src_bonus/update/render_bonus.c
+SRC_BONUS_FILES		+= src_bonus/update/update_player_bonus.c
+SRC_BONUS_FILES		+= src_bonus/update/update_bonus.c
+SRC_BONUS_FILES		+= src_bonus/utils/free_split_bonus.c
+SRC_BONUS_FILES		+= src_bonus/utils/get_color_value_bonus.c
+SRC_BONUS_FILES		+= src_bonus/parse/is_entry_bonus.c
+SRC_BONUS_FILES		+= src_bonus/parse/is_cardinal_bonus.c
+SRC_BONUS_FILES		+= src_bonus/parse/parse_bonus.c
+SRC_BONUS_FILES		+= src_bonus/parse/get_assets_bonus.c
+SRC_BONUS_FILES		+= src_bonus/parse/create_data_bonus.c
+SRC_BONUS_FILES		+= src_bonus/parse/get_player_start_bonus.c
+SRC_BONUS_FILES		+= src_bonus/parse/is_rgb_line_bonus.c
+SRC_BONUS_FILES		+= src_bonus/parse/get_grid_bonus.c
+SRC_BONUS_FILES		+= src_bonus/parse/handle_grid_bonus.c
+SRC_BONUS_FILES		+= src_bonus/parse/trimm_line_bonus.c
+SRC_BONUS_FILES		+= src_bonus/parse/is_map_bonus.c
+SRC_BONUS_FILES		+= src_bonus/parse/get_map_data_bonus.c
+SRC_BONUS_FILES		+= src_bonus/parse/get_size_bonus.c
+SRC_BONUS_FILES		+= src_bonus/raycast/dda_bonus.c
+SRC_BONUS_FILES		+= src_bonus/raycast/ray_bonus.c
+SRC_BONUS_FILES		+= src_bonus/raycast/raycast_bonus.c
+SRC_BONUS_FILES		+= src_bonus/input/input_bonus.c
+SRC_BONUS_FILES		+= src_bonus/input/exit_bonus.c
+SRC_BONUS_FILES		+= src_bonus/check_map/check_wall_bonus.c
+
+OBJ_BONUS_FILES		= $(patsubst $(SRC_BONUS_DIR)/%.c, $(OBJ_BONUS_DIR)/%.o, $(SRC_BONUS_FILES))
+MAIN_BONUS			= main_bonus.c
+
 # ********** RULES ********** #
 
 all:				$(NAME)
@@ -61,6 +102,19 @@ $(OBJ_DIR):
 $(OBJ_DIR)/%.o:		$(SRC_DIR)/%.c
 					mkdir -p "$(@D)"
 					$(CC) -c $< $(CFLAGS) -o $@
+
+bonus:				$(MAIN_BONUS) $(OBJ_BONUS_DIR) $(OBJ_BONUS_FILES) $(INCLUDE_BONUS_FILES)
+					$(MAKE) -C $(LIBFT_DIR)
+					$(MAKE) -C $(LIBMLX_DIR)
+					$(CC) $(MAIN_BONUS) $(OBJ_BONUS_FILES) $(CFLAGS_BONUS) $(CFLAGS_LIB) \
+						-o $(NAME)_bonus
+					
+$(OBJ_BONUS_DIR):
+					mkdir -p $@
+
+$(OBJ_BONUS_DIR)/%.o:	$(SRC_BONUS_DIR)/%.c
+						mkdir -p "$(@D)"
+						$(CC) -c $< $(CFLAGS) -o $@
 
 clean:
 					echo $(CLEANING_MSG)
