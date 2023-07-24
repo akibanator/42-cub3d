@@ -1,17 +1,45 @@
-NAME				= cub3d
+NAME				= cub3D
 CC					= cc
 CFLAGS				= -Wall -Wextra -Werror -I$(LIBFT_DIR) -I$(LIBMLX_DIR) -I$(INCLUDE_DIR)
 CFLAGS_LIB			= -lft -L $(LIBFT_DIR) -lmlx -L $(LIBMLX_DIR) -lXext -lX11 -lm -lz
 
 INCLUDE_DIR			= include
-INCLUDE_FILES		= $(shell find include/ -type f -name '*.h')
+INCLUDE_FILES		= include/cub3d.h include/constants.h
 SRC_DIR				= src
 OBJ_DIR				= obj
 LIB_DIR				= lib
 LIBFT_DIR			= lib/libft
 LIBMLX_DIR			= lib/libmlx
 
-SRC_FILES			= $(shell find src/ -type f -name '*.c')
+SRC_FILES			= src/draw/draw_walls.c
+SRC_FILES			+= src/draw/draw_pixel.c
+SRC_FILES			+= src/setup/init.c
+SRC_FILES			+= src/setup/hooks_setup.c
+SRC_FILES			+= src/update/render.c
+SRC_FILES			+= src/update/update_player.c
+SRC_FILES			+= src/update/update.c
+SRC_FILES			+= src/utils/get_color_value.c
+SRC_FILES			+= src/utils/free_split.c
+SRC_FILES			+= src/parse/get_map_data.c
+SRC_FILES			+= src/parse/trimm_line.c
+SRC_FILES			+= src/parse/get_assets.c
+SRC_FILES			+= src/parse/is_map.c
+SRC_FILES			+= src/parse/parse.c
+SRC_FILES			+= src/parse/is_cardinal.c
+SRC_FILES			+= src/parse/handle_grid.c
+SRC_FILES			+= src/parse/is_entry.c
+SRC_FILES			+= src/parse/get_player_start.c
+SRC_FILES			+= src/parse/create_data.c
+SRC_FILES			+= src/parse/is_rgb_line.c
+SRC_FILES			+= src/parse/get_size.c
+SRC_FILES			+= src/parse/get_grid.c
+SRC_FILES			+= src/raycast/ray.c
+SRC_FILES			+= src/raycast/dda.c
+SRC_FILES			+= src/raycast/raycast.c
+SRC_FILES			+= src/input/input.c
+SRC_FILES			+= src/input/exit.c
+SRC_FILES			+= src/check_map/check_wall.c
+
 OBJ_FILES			= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
 MAIN				= main.c
 VALGRIND			= valgrind --leak-check=full --show-leak-kinds=all

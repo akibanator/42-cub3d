@@ -1,51 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_grid.c                                      :+:      :+:    :+:   */
+/*   get_player_start.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcorrea- <bruuh.cor@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/23 20:45:13 by bcorrea-          #+#    #+#             */
-/*   Updated: 2023/07/23 20:45:13 by bcorrea-         ###   ########.fr       */
+/*   Created: 2023/07/23 21:17:29 by bcorrea-          #+#    #+#             */
+/*   Updated: 2023/07/23 21:17:35 by bcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	is_grid_border(char **grid, int height, int width)
+t_vector	get_start_dir(char **grid)
 {
-	size_t	i;
-	size_t	j;
+	t_vector	start_dir;
+	size_t		i;
+	size_t		j;
 
 	i = 0;
+	start_dir.x = 0;
+	start_dir.y = 0;
 	while (grid[i] != NULL)
 	{
 		j = 0;
 		while (grid[i][j] != '\0')
 		{
-			if (grid[0][j] != '1')
-				return (1);
-			if (grid[i][0] != '1')
-				return (1);
-			if (grid[height - 1][j] != '1')
-				return (1);
-			if (grid[i][width - 1] != '1')
-				return (1);
+			if (grid[i][j] == 'N')
+				start_dir.y = 1;
+			if (grid[i][j] == 'S')
+				start_dir.y = -1;
+			if (grid[i][j] == 'W')
+				start_dir.x = -1;
+			if (grid[i][j] == 'E')
+				start_dir.x = 1;
 			j++;
 		}
 		i++;
 	}
-	return (0);
+	return (start_dir);
 }
 
-static int	is_valid_player(char **grid)
+t_vector	get_start_pos(char **grid)
 {
-	size_t	i;
-	size_t	j;
-	size_t	p_count;
+	t_vector	start_pos;
+	size_t		i;
+	size_t		j;
 
 	i = 0;
-	p_count = 0;
 	while (grid[i] != NULL)
 	{
 		j = 0;
@@ -53,26 +55,13 @@ static int	is_valid_player(char **grid)
 		{
 			if (grid[i][j] == 'N' || grid[i][j] == 'S' || grid[i][j] == 'W'
 				|| grid[i][j] == 'E')
-				p_count++;
+			{
+				start_pos.y = i;
+				start_pos.x = j;
+			}
 			j++;
 		}
 		i++;
 	}
-	if (p_count != 1)
-		return (1);
-	return (0);
-}
-
-int	check_valid_grid(char **grid, t_vector size)
-{
-	int	height;
-	int	width;
-
-	height = (int)size.y;
-	width = (int)size.x;
-	if (is_grid_border(grid, height, width))
-		return (1);
-	if (is_valid_player(grid))
-		return (1);
-	return (0);
+	return (start_pos);
 }

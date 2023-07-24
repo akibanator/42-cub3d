@@ -12,13 +12,14 @@
 
 #include "cub3d.h"
 
-static t_ray get_horizontal_ray(t_vector origin, double ray_angle, t_map map);
-static t_ray get_vertical_ray(t_vector origin, double ray_angle, t_map map);
+static t_ray	get_horizontal_ray(t_vector origin, double ray_angle,
+					t_map map);
+static t_ray	get_vertical_ray(t_vector origin, double ray_angle, t_map map);
 
-t_ray raycast(t_vector origin, double ray_angle, t_map map)
+t_ray	raycast(t_vector origin, double ray_angle, t_map map)
 {
-	t_ray vertical_ray;
-	t_ray horizontal_ray;
+	t_ray	vertical_ray;
+	t_ray	horizontal_ray;
 
 	horizontal_ray = get_horizontal_ray(origin, ray_angle, map);
 	vertical_ray = get_vertical_ray(origin, ray_angle, map);
@@ -27,11 +28,11 @@ t_ray raycast(t_vector origin, double ray_angle, t_map map)
 	return (horizontal_ray);
 }
 
-static t_ray get_horizontal_ray(t_vector origin, double ray_angle, t_map map)
+static t_ray	get_horizontal_ray(t_vector origin, double ray_angle, t_map map)
 {
-	t_ray	 ray;
-	t_vector intercept;
-	t_vector step;
+	t_ray		ray;
+	t_vector	intercept;
+	t_vector	step;
 
 	ray = ray_new(origin, ray_angle);
 	intercept.y = floor(origin.y / TILE_SIZE) * TILE_SIZE;
@@ -51,11 +52,11 @@ static t_ray get_horizontal_ray(t_vector origin, double ray_angle, t_map map)
 	return (ray);
 }
 
-static t_ray get_vertical_ray(t_vector origin, double ray_angle, t_map map)
+static t_ray	get_vertical_ray(t_vector origin, double ray_angle, t_map map)
 {
-	t_ray	 ray;
-	t_vector intercept;
-	t_vector step;
+	t_ray		ray;
+	t_vector	intercept;
+	t_vector	step;
 
 	ray = ray_new(origin, ray_angle);
 	intercept.x = floor(origin.x / TILE_SIZE) * TILE_SIZE;

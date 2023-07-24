@@ -6,15 +6,15 @@
 /*   By: bcorrea- <bruuh.cor@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 19:20:04 by bcorrea-          #+#    #+#             */
-/*   Updated: 2023/07/23 17:45:25 by bcorrea-         ###   ########.fr       */
+/*   Updated: 2023/07/23 19:35:18 by bcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
-	t_data *data;
+	t_data	*data;
 
 	if (check_args(argc, argv) || check_map(argv[1]))
 	{
@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
 		printf("Error\n");
 		return (1);
 	}
+	data->player = player_init(data->map);
 	hooks_setup(data);
 	mlx_loop(data->mlx);
 	exit_game(data);

@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   constants.h                                        :+:      :+:    :+:   */
+/*   free_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcorrea- <bruuh.cor@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/23 20:20:57 by bcorrea-          #+#    #+#             */
-/*   Updated: 2023/07/23 20:20:57 by bcorrea-         ###   ########.fr       */
+/*   Created: 2023/07/23 21:18:39 by bcorrea-          #+#    #+#             */
+/*   Updated: 2023/07/23 21:18:43 by bcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define PI 3.14159265
-#define TWO_PI 6.28318530
+#include "cub3d.h"
 
-#define GAME_WIDTH 320
-#define GAME_HEIGHT 200
-#define TILE_SIZE 64
-#define FOV_ANGLE 60
-#define NUM_RAYS GAME_WIDTH
+void	free_split(char **split)
+{
+	int	i;
 
-#define UPSCALE 4
-
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 800
-
-// Player
-#define WALK_SPEED 2
-#define TURN_SPEED 0.02
-#define SENSIBILITY 0.00003
-#define MOUSE_DEADZONE 200
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
+}

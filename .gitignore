@@ -1,10 +1,11 @@
 *.o
 *.a
 obj
-cub3d
+cub3D
 debug
 compile_flags.txt
 new_core*
 .clang-format
 ./lib/libmlx/test/mlx-test
 cub3d_destroyer
+norm_hero

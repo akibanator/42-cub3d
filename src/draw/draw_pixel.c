@@ -12,26 +12,26 @@
 
 #include "cub3d.h"
 
-void draw_pixel(t_img *canvas, int x, int y, int color)
+void	draw_pixel(t_img *canvas, int x, int y, int color)
 {
-	char *pixel;
-	int	  pixel_x;
-	int	  pixel_y;
+	char	*pixel;
+	int		pixel_x;
+	int		pixel_y;
 
 	pixel_y = y * canvas->line_length;
 	pixel_x = x * (canvas->bits_per_pixel / 8);
 	pixel = canvas->addr + (pixel_y + pixel_x);
-	*(int *) pixel = color;
+	*(int *)pixel = color;
 }
 
-int get_tex_color(t_img tex, int x, int y)
+int	get_tex_color(t_img tex, int x, int y)
 {
-	int color;
-	int pixel_x;
-	int pixel_y;
+	int	color;
+	int	pixel_x;
+	int	pixel_y;
 
 	pixel_y = y * tex.line_length;
 	pixel_x = x * (tex.bits_per_pixel / 8);
-	color = *(int *) (tex.addr + (pixel_y + pixel_x));
+	color = *(int *)(tex.addr + (pixel_y + pixel_x));
 	return (color);
 }

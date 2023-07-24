@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   constants.h                                        :+:      :+:    :+:   */
+/*   is_entry.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcorrea- <bruuh.cor@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/23 20:20:57 by bcorrea-          #+#    #+#             */
-/*   Updated: 2023/07/23 20:20:57 by bcorrea-         ###   ########.fr       */
+/*   Created: 2023/07/23 20:51:31 by bcorrea-          #+#    #+#             */
+/*   Updated: 2023/07/23 21:01:36 by bcorrea-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define PI 3.14159265
-#define TWO_PI 6.28318530
+#include "cub3d.h"
 
-#define GAME_WIDTH 320
-#define GAME_HEIGHT 200
-#define TILE_SIZE 64
-#define FOV_ANGLE 60
-#define NUM_RAYS GAME_WIDTH
+int	is_entry(char *line)
+{
+	if (is_cardinal_line(line))
+		return (1);
+	if (is_rgb_line(line))
+		return (1);
+	if (!ft_strncmp(line, "1", 1) || !ft_strncmp(line, " ", 1))
+		if (is_map(line))
+			return (1);
+	return (0);
+}
 
-#define UPSCALE 4
+int	check_line(char *line)
+{
+	size_t	i;
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 800
-
-// Player
-#define WALK_SPEED 2
-#define TURN_SPEED 0.02
-#define SENSIBILITY 0.00003
-#define MOUSE_DEADZONE 200
+	i = count_spaces(line);
+	if (line[i] == '\0')
+		return (0);
+	if (is_entry(line + i))
+		return (1);
+	return (0);
+}

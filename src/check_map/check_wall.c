@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-int is_ray_inside_map(t_ray ray, t_map map)
+int	is_ray_inside_map(t_ray ray, t_map map)
 {
 	if (ray.hit.x < 0 && ray.hit.x > map.size.x * TILE_SIZE)
 		return (FALSE);

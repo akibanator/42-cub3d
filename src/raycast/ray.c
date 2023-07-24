@@ -12,9 +12,9 @@
 
 #include "cub3d.h"
 
-t_ray ray_new(t_vector origin, double angle)
+t_ray	ray_new(t_vector origin, double angle)
 {
-	t_ray ray;
+	t_ray	ray;
 
 	ray.origin = origin;
 	ray.angle = normalize_angle(angle);
@@ -25,11 +25,11 @@ t_ray ray_new(t_vector origin, double angle)
 	return (ray);
 }
 
-double ray_get_distance(t_ray ray)
+double	ray_get_distance(t_ray ray)
 {
-	double distance;
-	double adjacent;
-	double opposite;
+	double	distance;
+	double	adjacent;
+	double	opposite;
 
 	adjacent = pow((ray.hit.x - ray.origin.x), 2);
 	opposite = pow((ray.hit.y - ray.origin.y), 2);
@@ -37,9 +37,9 @@ double ray_get_distance(t_ray ray)
 	return (distance);
 }
 
-t_vector ray_get_dir(double ray_angle)
+t_vector	ray_get_dir(double ray_angle)
 {
-	t_vector dir;
+	t_vector	dir;
 
 	if (ray_angle < 0.5 * PI || ray_angle > 1.5 * PI)
 		dir.x = 1;
@@ -52,7 +52,7 @@ t_vector ray_get_dir(double ray_angle)
 	return (dir);
 }
 
-double normalize_angle(double angle)
+double	normalize_angle(double angle)
 {
 	angle = remainder(angle, TWO_PI);
 	if (angle < 0)
